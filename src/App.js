@@ -11,6 +11,12 @@ export default function App() {
     setFile(selectedFile);
   };
 
+  useEffect(() => {
+    if(localStorage.getItem("data")) {
+      setTable(JSON.parse(localStorage.getItem("data")))
+    }
+  }, [])
+
   const handleUpload = async () => {
     try {
       const formData = new FormData();
@@ -26,6 +32,7 @@ export default function App() {
         .then(
           (res) => {
             setTable(res.data.status);
+            localStorage.setItem("data",JSON.stringify(res.data.status))
           },
           (err) => console.log(err, "dd")
         );
